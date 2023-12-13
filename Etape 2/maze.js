@@ -8,11 +8,85 @@ let maze = [
     ["0", "X", "0", "1", "0", "0", "0"],
     ["0", "X", "0", "0", "0", "X", "0"],
 ]
-
-function move(numberOfSteps, win, maze) {
-    if (maze[x] [y+1] = "0") {
-        maze[x] [y + 1] = "R";
+let gretelCase = maze["S"];
+maze["S"] = maze["R"];
+while(win === false){
+    moveDown(numberOfSteps, maze[6][0]);
+}
+function moveDown(numberOfSteps, maze, gretelCase) {
+    switch (maze[x] [y - 1]) {
+        case "G":
+            win = true;
+            console.log("You win!");
+            break;
+        case "0":
+            numberOfSteps++;
+            maze[x] [y - 1] = "R";
+            gretelCase = maze[x] [y - 1];
+            break;
+        case "X":
+            moveRight(numberOfSteps, maze, gretelCase);
+            break;
+        case "R":
+            moveLeft(numberOfSteps, maze, gretelCase);
+            break;
     }
-    else if (maze)
 }
 
+function moveRight(numberOfSteps, maze, gretelCase) {
+    switch (maze[x + 1] [y]) {
+        case "G":
+            win = true;
+            console.log("You win!");
+            break;
+        case "0":
+            numberOfSteps++;
+            maze[x + 1] [y] = "R";
+            gretelCase = maze[x + 1] [y];
+            break;
+        case "X":
+            moveUp(numberOfSteps, maze, gretelCase);
+            break;
+        case "R":
+            moveUp(numberOfSteps, maze, gretelCase);
+            break;
+    }
+}
+
+function moveUp(numberOfSteps, maze, gretelCase) {
+    switch (maze[x] [y + 1]) {
+        case "G":
+            win = true;
+            console.log("You win!");
+            break;
+        case "0":
+            numberOfSteps++;
+            maze[x] [y + 1] = "R";
+            gretelCase = maze[x] [y + 1];
+            break;
+        case "X":
+            moveLeft(numberOfSteps, maze, gretelCase);
+            break;
+        case "R":
+            moveLeft(numberOfSteps, maze, gretelCase);
+            break;
+    }
+}
+
+function moveLeft(numberOfSteps, maze, gretelCase) {
+    switch (maze[x - 1] [y]) {
+        case "G":
+            win = true;
+            console.log("You win!");
+            break;
+        case "0":
+            numberOfSteps++;
+            maze[x - 1] [y] = "R";
+            gretelCase = maze[x - 1] [y];
+            break;
+        case "X":
+            moveDown(numberOfSteps, maze, gretelCase);
+        case "R":
+            moveDown(numberOfSteps, maze, gretelCase);
+    }
+}
