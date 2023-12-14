@@ -24,97 +24,111 @@ function log_maze() {
     console.log('\n');
 }
 
-function moveDown(gretelCase) {
+function moveDown(gretelCase, lastCase) {
     switch (maze[gretelCase.x + 1][gretelCase.y]) {
         case "G":
             break;
         case "0":
             numberOfSteps++;
-            maze[gretelCase.x + 1][gretelCase.y] = "R";
+            maze[gretelCase.x][gretelCase.y + 1] = "R";
+            lastCase.x = gretelCase.x;
+            lastCase.y= gretelCase.y;
             gretelCase.x++;
             break;
         case "X":
-            moveRight(gretelCase);
+            moveRight(gretelCase, lastCase);
             break;
         case "R":
-            maze[gretelCase.x + 1][gretelCase.y] = "0";
-            moveRight(gretelCase);
+            moveRight(gretelCase, lastCase);
             break;
+        default:
+            numberOfSteps++;
+            gretelCase = lastCase;
     }
+
     log_maze();
     return gretelCase;
 }
 
-function moveRight(gretelCase) {
+function moveRight(gretelCase, lastCase) {
     switch (maze[gretelCase.x][gretelCase.y + 1]) {
         case "G":
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x][gretelCase.y + 1] = "R";
+            lastCase = maze[gretelCase.x][gretelCase.y];
             gretelCase.y++;
             break;
         case "X":
-            moveUp(gretelCase);
+            moveUp(gretelCase, lastCase);
             break;
         case "R":
-            maze[gretelCase.x][gretelCase.y + 1] = "0";
-            moveUp(gretelCase);
+            moveUp(gretelCase, lastCase);
             break;
+        default:
+            numberOfSteps++;
+            gretelCase = lastCase;
     }
     return gretelCase;
 }
 
-function moveUp(gretelCase) {
+function moveUp(gretelCase, lastCase) {
     switch (maze[gretelCase.x - 1][gretelCase.y]) {
         case "G":
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x - 1][gretelCase.y] = "R";
+            lastCase = maze[gretelCase.x][gretelCase.y];
             gretelCase.x--;
             break;
         case "X":
-            moveLeft(gretelCase);
+            moveLeft(gretelCase, lastCase);
             break;
         case "R":
-            maze[gretelCase.x - 1][gretelCase.y] = "0";
-            moveLeft(gretelCase);
+            moveLeft(gretelCase, lastCase);
             break;
+        default:
+            numberOfSteps++;
+            gretelCase = lastCase;
     }
     return gretelCase;
 }
 
-function moveLeft(gretelCase) {
+function moveLeft(gretelCase, lastCase) {
     switch (maze[gretelCase.x][gretelCase.y - 1]) {
         case "G":
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x][gretelCase.y - 1] = "R";
+            lastCase = maze[gretelCase.x][gretelCase.y];
             gretelCase.y--;
             break;
         case "X":
-            moveDown(gretelCase);
+            moveDown(gretelCase, lastCase);
             break;
         case "R":
-            maze[gretelCase.x][gretelCase.y - 1] = "0";
-            moveDown(gretelCase);
+            moveDown(gretelCase, lastCase);
             break;
+        default:
+            numberOfSteps++;
+            gretelCase = lastCase;
     }
     return gretelCase;
 }
 
 function move(startCase) {
     let gretelCase = startCase;
-    maze[gretelCase.x][gretelCase.y] = "R";
-    moveDown(gretelCase);
+    let lastCase = startCase;
+    moveDown(gretelCase, lastCase);
     if (maze[gretelCase.x][gretelCase.y] === "G") {
         console.log("You win!");
         return;
     }
     else {
-        move(gretelCase);
+        move(gretelCase, lastCase);
         return gretelCase
     }
 }
