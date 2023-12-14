@@ -28,7 +28,9 @@ function moveDown(numberOfSteps, maze, gretelCase) {
             moveRight(numberOfSteps, maze, gretelCase);
             break;
         case "R":
-            moveLeft(numberOfSteps, maze, gretelCase);
+            maze[x] [y - 1] = "0";
+            moveRight(numberOfSteps, maze, gretelCase);
+            break;
             break;
     }
 }
@@ -48,6 +50,7 @@ function moveRight(numberOfSteps, maze, gretelCase) {
             moveUp(numberOfSteps, maze, gretelCase);
             break;
         case "R":
+            maze[x + 1] [y] = "0";
             moveUp(numberOfSteps, maze, gretelCase);
             break;
     }
@@ -68,6 +71,7 @@ function moveUp(numberOfSteps, maze, gretelCase) {
             moveLeft(numberOfSteps, maze, gretelCase);
             break;
         case "R":
+            maze[x] [y + 1] = "0";
             moveLeft(numberOfSteps, maze, gretelCase);
             break;
     }
@@ -87,6 +91,7 @@ function moveLeft(numberOfSteps, maze, gretelCase) {
         case "X":
             moveDown(numberOfSteps, maze, gretelCase);
         case "R":
+            maze[x - 1] [y] = "0";
             moveDown(numberOfSteps, maze, gretelCase);
     }
 }
