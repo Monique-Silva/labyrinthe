@@ -1,103 +1,111 @@
 let numberOfSteps = 0;
 let maze = [
-    ["S", "X", "0", "0", "0", "0", "0"],
-    ["0", "X", "0", "X", "X", "0", "X"],
-    ["0", "X", "0", "X", "G", "0", "0"],
-    ["0", "0", "0", "0", "X", "X", "0"],
-    ["0", "X", "0", "1", "0", "0", "0"],
-    ["0", "X", "0", "0", "0", "X", "0"],
+    ["X", "X", "X", "X", "X", "X", "X", "X", "X"],
+    ["X", "S", "X", "0", "0", "0", "0", "0", "X"],
+    ["X", "0", "X", "0", "X", "X", "0", "X", "X"],
+    ["X", "0", "X", "0", "X", "G", "0", "0", "X"],
+    ["X", "0", "0", "0", "0", "X", "X", "0", "X"],
+    ["X", "0", "X", "0", "1", "0", "0", "0", "X"],
+    ["X", "0", "X", "0", "0", "0", "X", "0", "X"],
+    ["X", "X", "X", "X", "X", "X", "X", "X", "X"],
 ]
-let startCase = maze["S"];
 
-function move (startCase) {
-    let startCase = gretelCase;
-    moveDown(gretelCase);
-    move (gretelCase);
-}
- 
-function moveDown(numberOfSteps, maze, gretelCase) {
-    switch (maze[x] [y - 1]) {
+
+const startCase = {
+    x: 1,
+    y: 1
+};
+
+function moveDown(gretelCase) {
+    switch (maze[gretelCase.x] [gretelCase.y - 1]) {
         case "G":
             console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
-            maze[x] [y - 1] = "R";
-            gretelCase = maze[x] [y - 1];
+            maze[gretelCase.x] [gretelCase.y - 1] = "R";
+            gretelCase = maze[gretelCase.x] [gretelCase.y - 1];
             break;
         case "X":
-            moveRight(numberOfSteps, maze, gretelCase);
+            moveRight(gretelCase);
             break;
         case "R":
-            maze[x] [y - 1] = "0";
-            moveRight(numberOfSteps, maze, gretelCase);
-            break;
+            maze[gretelCase.x] [gretelCase.y - 1] = "0";
+            moveRight(gretelCase);
             break;
     }
+    console.log(maze);
+    return gretelCase;
 }
 
-function moveRight(numberOfSteps, maze, gretelCase) {
+function moveRight(gretelCase) {
     switch (maze[x + 1] [y]) {
         case "G":
             console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
-            maze[x + 1] [y] = "R";
-            gretelCase = maze[x + 1] [y];
+            maze[gretelCase.x + 1] [gretelCase.y] = "R";
+            gretelCase = maze[gretelCase.x + 1] [gretelCase.y];
             break;
         case "X":
-            moveUp(numberOfSteps, maze, gretelCase);
+            moveUp(gretelCase);
             break;
         case "R":
-            maze[x + 1] [y] = "0";
-            moveUp(numberOfSteps, maze, gretelCase);
+            maze[gretelCase.x + 1] [gretelCase.y] = "0";
+            moveUp(gretelCase);
             break;
     }
+    return gretelCase;
 }
 
-function moveUp(numberOfSteps, maze, gretelCase) {
-    switch (maze[x] [y + 1]) {
+function moveUp(gretelCase) {
+    switch (maze[gretelCase.x] [gretelCase.y + 1]) {
         case "G":
             console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
-            maze[x] [y + 1] = "R";
-            gretelCase = maze[x] [y + 1];
+            maze[gretelCase.x] [gretelCase.y + 1] = "R";
+            gretelCase = maze[gretelCase.x] [gretelCase.y + 1];
             break;
         case "X":
-            moveLeft(numberOfSteps, maze, gretelCase);
+            moveLeft(gretelCase);
             break;
         case "R":
-            maze[x] [y + 1] = "0";
-            moveLeft(numberOfSteps, maze, gretelCase);
+            maze[gretelCase.x] [gretelCase.y + 1] = "0";
+            moveLeft(gretelCase);
             break;
     }
+    return gretelCase;
 }
 
-function moveLeft(numberOfSteps, maze, gretelCase) {
-    switch (maze[x - 1] [y]) {
+function moveLeft(gretelCase) {
+    switch (maze[gretelCase.x - 1] [gretelCase.y]) {
         case "G":
             console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
-            maze[x - 1] [y] = "R";
-            gretelCase = maze[x - 1] [y];
+            maze[gretelCase.x - 1] [gretelCase.y] = "R";
+            gretelCase = maze[gretelCase.x - 1] [gretelCase.y];
             break;
         case "X":
-            moveDown(numberOfSteps, maze, gretelCase);
+            moveDown(gretelCase);
         case "R":
-            maze[x - 1] [y] = "0";
-            moveDown(numberOfSteps, maze, gretelCase);
+            maze[gretelCase.x - 1] [gretelCase.y] = "0";
+            moveDown(gretelCase);
+            break;
     }
+    return gretelCase;
 }
 
-function move (startCase) {
-    moveDown(startCase);
-    move (gretelCase);
+function move(startCase) {
+    let gretelCase = startCase;
+    maze[gretelCase.x][gretelCase.y] = "R";
+    moveDown(gretelCase);
+    move(gretelCase);
+    return gretelCase
 }
 
- 
 move(startCase);
