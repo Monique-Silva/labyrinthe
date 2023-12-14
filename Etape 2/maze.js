@@ -1,5 +1,4 @@
 let numberOfSteps = 0;
-let win = false;
 let maze = [
     ["S", "X", "0", "0", "0", "0", "0"],
     ["0", "X", "0", "X", "X", "0", "X"],
@@ -8,15 +7,17 @@ let maze = [
     ["0", "X", "0", "1", "0", "0", "0"],
     ["0", "X", "0", "0", "0", "X", "0"],
 ]
-let gretelCase = maze["S"];
-maze["S"] = maze["R"];
-while(win === false){
-    moveDown(numberOfSteps, maze[6][0]);
+let startCase = maze["S"];
+
+function move (startCase) {
+    let startCase = gretelCase;
+    moveDown(gretelCase);
+    move (gretelCase);
 }
+ 
 function moveDown(numberOfSteps, maze, gretelCase) {
     switch (maze[x] [y - 1]) {
         case "G":
-            win = true;
             console.log("You win!");
             break;
         case "0":
@@ -38,7 +39,6 @@ function moveDown(numberOfSteps, maze, gretelCase) {
 function moveRight(numberOfSteps, maze, gretelCase) {
     switch (maze[x + 1] [y]) {
         case "G":
-            win = true;
             console.log("You win!");
             break;
         case "0":
@@ -59,7 +59,6 @@ function moveRight(numberOfSteps, maze, gretelCase) {
 function moveUp(numberOfSteps, maze, gretelCase) {
     switch (maze[x] [y + 1]) {
         case "G":
-            win = true;
             console.log("You win!");
             break;
         case "0":
@@ -80,7 +79,6 @@ function moveUp(numberOfSteps, maze, gretelCase) {
 function moveLeft(numberOfSteps, maze, gretelCase) {
     switch (maze[x - 1] [y]) {
         case "G":
-            win = true;
             console.log("You win!");
             break;
         case "0":
@@ -95,3 +93,11 @@ function moveLeft(numberOfSteps, maze, gretelCase) {
             moveDown(numberOfSteps, maze, gretelCase);
     }
 }
+
+function move (startCase) {
+    moveDown(startCase);
+    move (gretelCase);
+}
+
+ 
+move(startCase);
