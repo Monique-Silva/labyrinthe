@@ -15,6 +15,7 @@ const startCase = {
     x: 1,
     y: 1
 };
+
 function log_maze() {
     for (let i = 0; i < maze.length; i++) {
         //for (let j = 0; j < maze[i].length; j++) {
@@ -27,12 +28,15 @@ function log_maze() {
 function moveDown(gretelCase, lastCase) {
     switch (maze[gretelCase.x + 1][gretelCase.y]) {
         case "G":
+            numberOfSteps++;
+            gretelCase.x++;
+            console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
-            maze[gretelCase.x][gretelCase.y + 1] = "R";
+            maze[gretelCase.x + 1][gretelCase.y] = "R";
             lastCase.x = gretelCase.x;
-            lastCase.y= gretelCase.y;
+            lastCase.y = gretelCase.y;
             gretelCase.x++;
             break;
         case "X":
@@ -41,9 +45,6 @@ function moveDown(gretelCase, lastCase) {
         case "R":
             moveRight(gretelCase, lastCase);
             break;
-        default:
-            numberOfSteps++;
-            gretelCase = lastCase;
     }
 
     log_maze();
@@ -53,11 +54,15 @@ function moveDown(gretelCase, lastCase) {
 function moveRight(gretelCase, lastCase) {
     switch (maze[gretelCase.x][gretelCase.y + 1]) {
         case "G":
+            numberOfSteps++;
+            gretelCase.y++;
+            console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x][gretelCase.y + 1] = "R";
-            lastCase = maze[gretelCase.x][gretelCase.y];
+            lastCase.x = gretelCase.x;
+            lastCase.y = gretelCase.y;
             gretelCase.y++;
             break;
         case "X":
@@ -66,9 +71,6 @@ function moveRight(gretelCase, lastCase) {
         case "R":
             moveUp(gretelCase, lastCase);
             break;
-        default:
-            numberOfSteps++;
-            gretelCase = lastCase;
     }
     return gretelCase;
 }
@@ -76,11 +78,15 @@ function moveRight(gretelCase, lastCase) {
 function moveUp(gretelCase, lastCase) {
     switch (maze[gretelCase.x - 1][gretelCase.y]) {
         case "G":
+            numberOfSteps++;
+            gretelCase.x--;
+            console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x - 1][gretelCase.y] = "R";
-            lastCase = maze[gretelCase.x][gretelCase.y];
+            lastCase.x = gretelCase.x;
+            lastCase.y = gretelCase.y;
             gretelCase.x--;
             break;
         case "X":
@@ -89,9 +95,6 @@ function moveUp(gretelCase, lastCase) {
         case "R":
             moveLeft(gretelCase, lastCase);
             break;
-        default:
-            numberOfSteps++;
-            gretelCase = lastCase;
     }
     return gretelCase;
 }
@@ -99,29 +102,55 @@ function moveUp(gretelCase, lastCase) {
 function moveLeft(gretelCase, lastCase) {
     switch (maze[gretelCase.x][gretelCase.y - 1]) {
         case "G":
+            numberOfSteps++;
+            gretelCase.y--;
+            console.log("You win!");
             break;
         case "0":
             numberOfSteps++;
             maze[gretelCase.x][gretelCase.y - 1] = "R";
-            lastCase = maze[gretelCase.x][gretelCase.y];
+            lastCase.x = gretelCase.x;
+            lastCase.y = gretelCase.y;
             gretelCase.y--;
             break;
         case "X":
-            moveDown(gretelCase, lastCase);
-            break;
+
         case "R":
-            moveDown(gretelCase, lastCase);
-            break;
-        default:
             numberOfSteps++;
-            gretelCase = lastCase;
+            console.log("Mon lastCase vaut " + lastCase.x + " " + lastCase.y);
+            console.log("Mon gretelCase vaut " + gretelCase.x + " " + gretelCase.y);
+            let temp = {
+            x: lastCase.x,
+            y: lastCase.y
+            }
+            if(gretelCase.x  - lastCase.x === 0) { lastCase.y--;}
+            if(gretelCase.y - lastCase.y === 0) {lastCase.x--;}
+            gretelCase.x = temp.x;
+            gretelCase.y = temp.y;
+            console.log("Mon lastCase vaut " + lastCase.x + " " + lastCase.y);
+            console.log("Mon gretelCase vaut " + gretelCase.x + " " + gretelCase.y);
+
+            break;
     }
     return gretelCase;
 }
 
+
 function move(startCase) {
-    let gretelCase = startCase;
-    let lastCase = startCase;
+    let gretelCase = {...startCase}; //clone - spread method
+    let lastCase = {...gretelCase};
+    while (maze[gretelCase.x][gretelCase.y] !== "G") {
+        moveDown(gretelCase, lastCase);
+    }
+    return gretelCase;
+}
+
+move(startCase);
+
+/* version recursive (trop de recursivité, cela ne marche pas)
+function move(startCase, lastCase) {
+   let gretelCase = { ...startCase}; //clone - spread method
+    let lastCase = { ...gretelCase};
     moveDown(gretelCase, lastCase);
     if (maze[gretelCase.x][gretelCase.y] === "G") {
         console.log("You win!");
@@ -134,3 +163,4 @@ function move(startCase) {
 }
 
 move(startCase);
+*/
